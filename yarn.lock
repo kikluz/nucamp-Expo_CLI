@@ -4647,9 +4647,9 @@ react-native-web@~0.13.12:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-"react-native@https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz":
+"react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
   version "0.63.2"
-  resolved "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz#1dae4e81714085100888571012f18b6b142b4773"
+  resolved "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz#a3d42e4135c891cf15a335cf69922e96507d6b8d"
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^4.14.0"
