@@ -6,9 +6,11 @@ function Directory(props) {
 
     const renderDirectoryItem = ({item}) => {
         return (
-            <ListItem
+            <ListItem 
                 title={item.name}
                 subtitle={item.description}
+                // Object takes a property of source source
+                onPress={() => props.onPress(item.id)}
                 leftAvatar={{ source: require('./images/react-lake.jpg')}}
             />
         );
@@ -16,8 +18,11 @@ function Directory(props) {
 
     return (
         <FlatList
+            // get data from
             data={props.campsites}
+            // render each item in the list 
             renderItem={renderDirectoryItem}
+            // key extractor setup a unique key for each item 
             keyExtractor={item => item.id.toString()}
         />
     );
