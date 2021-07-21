@@ -8,6 +8,7 @@ function RenderCampsite({campsite}){
     // make sure not null or undefined check with if statement
     if(campsite){
         return (
+            
             <Card featuredTitle={campsite.name} image={require('./images/react-lake.jpg')}>
                 <Text style={{margin: 10}}>
                     {campsite.description}

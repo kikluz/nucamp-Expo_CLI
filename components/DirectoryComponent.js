@@ -10,6 +10,8 @@ function Directory(props) {
                 title={item.name}
                 subtitle={item.description}
                 // Object takes a property of source source
+                // when onPress on mobile divice the fucntion will fire, trigger onCampsiteSelect
+                // vevent handler that we passed via props, we have access to the item id 
                 onPress={() => props.onPress(item.id)}
                 leftAvatar={{ source: require('./images/react-lake.jpg')}}
             />
