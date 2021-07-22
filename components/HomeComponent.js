@@ -13,7 +13,7 @@ function RenderItem({item}) {
                 image={require('./images/react-lake.jpg')}
             >
                 <Text style={{margin: 10}}>
-                    {item.decription}
+                    {item.description}
                 </Text>
 
             </Card>
@@ -28,7 +28,7 @@ class Home extends Component {
         this.state = {
             campsites: CAMPSITES,
             promotions: PROMOTIONS,
-            parners: PARTNERS
+            partners: PARTNERS
         };
     }
 
@@ -48,7 +48,7 @@ class Home extends Component {
                 />
 
                 <RenderItem 
-                    item={this.state.parners.filter(parner => parner.featured)[0]}
+                    item={this.state.partners.filter(partner => partner.featured)[0]}
                 />
             </ScrollView>
         );
