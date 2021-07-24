@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import { Card, Title, Divider, ListItem, Button, Icon  } from 'react-native-elements';
+import {  Text, ScrollView } from 'react-native';
+import { Card } from 'react-native-elements';
 import { CAMPSITES } from '../shared/campsites';
 import { PROMOTIONS } from '../shared/promotions';
 import { PARTNERS } from '../shared/partners';
