@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Home from './HomeComponent';
+import Contact from './ContactComponent';
+import About from './AboutComponent';
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
 import Constants from 'expo-constants';
@@ -45,9 +47,48 @@ const HomeNavigator = createStackNavigator(
     }
 );
 
+// Cretae About stack navigator 
+const AboutNavigator = createStackNavigator(
+    {
+        About: {screen: About}
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
+
+// Cretae Contact stack navigator 
+const ContactNavigator = createStackNavigator(
+    {
+        Contact: {screen: Contact}
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
 const MainNavigator = createDrawerNavigator(
     {
         Home: { screen: HomeNavigator},
+        About: { screen: AboutNavigator},
+        Contact: { screen: ContactNavigator},
         Directory: { screen: DirectoryNavigator }
     },
     {
