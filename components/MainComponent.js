@@ -104,7 +104,6 @@ class Main extends Component {
         return(
 
             <View  style={{flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight }}>
-
                 <AppNavigator />
             </View>
         );
