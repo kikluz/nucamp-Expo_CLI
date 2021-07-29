@@ -2,3 +2,6 @@
 json-server -H 0.0.0.0 --watch db.json -p 3001 -d 2000
 
 # Set up Redux folder and files
+
+# Standalone React-Devtools
+Start the standalone React Devtools by typing react-devtools into your terminal (don't forget the hyphen)

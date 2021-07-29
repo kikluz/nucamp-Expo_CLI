@@ -15,11 +15,13 @@ const mapStateToProps = state => {
 };
 
 function RenderItem(props) {
+    // destructure the item property
     const {item} = props;
 
     if (props.isLoading) {
         return <Loading />;
     }
+    // check for error massage 
     if (props.errMess) {
         return (
             <View>

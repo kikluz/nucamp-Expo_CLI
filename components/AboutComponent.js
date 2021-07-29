@@ -51,6 +51,7 @@ class About extends Component {
                 </ScrollView>
             );
         }
+        
         if (this.props.partners.errMess) {
             return (
                 <ScrollView>
