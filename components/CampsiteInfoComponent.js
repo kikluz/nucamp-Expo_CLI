@@ -8,6 +8,7 @@ import { postFavorite } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
+        // request as a props 
         campsites: state.campsites,
         comments: state.comments,
         favorites: state.favorites
@@ -45,9 +46,9 @@ function RenderCampsite(props) {
     }
     return <View />;
 }
-//Render Comments Components //
+
 function RenderComments({comments}) {
-    //RENDER COMMENT ITEM FUNCTION // 
+     
     const renderCommentItem = ({item}) => {
         return (
             <View style={{margin: 10}}>
@@ -58,10 +59,10 @@ function RenderComments({comments}) {
         );
     };
 
-    //render the comments inside CARD component //
+    
      return (
 
-         <Card title='Comments'>{/* comments are in array, good opp to use FlatList */}
+         <Card title='Comments'>
             <FlatList
                 data={comments}
                 renderItem={renderCommentItem}
@@ -75,7 +76,6 @@ function RenderComments({comments}) {
 class CampsiteInfo extends Component {
 
     
-
     markFavorite(campsiteId) {
         this.props.postFavorite(campsiteId);
     }
@@ -91,6 +91,7 @@ class CampsiteInfo extends Component {
         return (
             <ScrollView>
                 <RenderCampsite campsite={campsite}
+                // iclude will return  boolean true or false
                      favorite={this.props.favorites.includes(campsiteId)}
                      markFavorite={() => this.markFavorite(campsiteId)}
                 />

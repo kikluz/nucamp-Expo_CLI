@@ -142,7 +142,7 @@ export const addPartners = partners => ({
     payload: partners
 });
 
-// FAVORITES //
+// Action creator  thunk
 export const postFavorite = campsiteId => dispatch => {
     setTimeout(() => {
         dispatch(addFavorite(campsiteId));
