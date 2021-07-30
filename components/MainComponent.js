@@ -15,6 +15,7 @@ import SafeAreaView from 'react-native-safe-area-view'; // Custom Side Drawer//
 import { connect } from 'react-redux';
 import { fetchCampsites, fetchComments, fetchPromotions,
     fetchPartners } from '../redux/ActionCreators';
+import Reservation from './ReservationComponent';
 
 
 const mapDispatchToProps = {
@@ -25,14 +26,16 @@ const mapDispatchToProps = {
 };
 
 
-//Stack Navigator Icons //
+
+
+//Stack Navigator Icons 
 const DirectoryNavigator = createStackNavigator(
   {
       Directory: { 
           screen: Directory,
           navigationOptions: ({navigation}) => ({
               headerLeft: <Icon
-            // function body and give it an icon component //
+            
             name='list'
             type='font-awesome'
             iconStyle={styles.stackIcon}
@@ -127,6 +130,33 @@ const AboutNavigator = createStackNavigator(
         })
     }
 );
+
+
+// ReservationNavigator component Stack Navigator 
+const ReservationNavigator = createStackNavigator(
+    {
+        Reservation: { screen: Reservation }
+    },
+    {
+        defaultNavigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='tree'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
+
+
 //Stack Navigator Icons//
 const CustomDrawerContentComponent = props => (
   <ScrollView>
@@ -179,6 +209,20 @@ const MainNavigator = createDrawerNavigator(
               )
           }
       },
+      Reservation: {
+        screen: ReservationNavigator,
+        navigationOptions: {
+            drawerLabel: 'Reserve Campsite',
+            drawerIcon: ({tintColor}) => (
+                <Icon
+                    name='tree'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                />
+            )
+        }
+    },
       About: {
           screen: AboutNavigator,
           navigationOptions: {
