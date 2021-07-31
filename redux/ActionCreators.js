@@ -153,3 +153,32 @@ export const addFavorite = campsiteId => ({
     type: ActionTypes.ADD_FAVORITE,
     payload: campsiteId
 });
+
+// task 3 new action creator functions: postComment and addComment,
+// postComment be a thunked action creator first parameter list (campsiteId, rating, author, text)
+// second parameter single parameter of (dispatch)
+// Inside the function body, create a new const named newComment. Assign to its value an object with the properties
+//  of campsiteId, rating, author, and text, 
+export const postComment = (campsiteId, rating, author, text) => (dispatch) => {
+    const newComment = {
+        campsiteId,
+        rating,
+        author,
+        text
+    };
+    newComment.date = new Date().toDateString();
+
+    setTimeout(() => {
+        dispatch(addComment(newComment));
+    }, 2000);
+}
+
+
+// addComment:
+// This will be a standard, non-thunked action creator. 
+// It will have one parameter: comment.
+// Set up its type property appropriately.
+const addComment = (comment) => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment
+});
