@@ -157,17 +157,20 @@ export const addFavorite = campsiteId => ({
 // task 3 new action creator functions: postComment and addComment,
 // postComment be a thunked action creator first parameter list (campsiteId, rating, author, text)
 // second parameter single parameter of (dispatch)
-// Inside the function body, create a new const named newComment. Assign to its value an object with the properties
-//  of campsiteId, rating, author, and text, 
 export const postComment = (campsiteId, rating, author, text) => (dispatch) => {
+ // Inside the function body, create a new const named newComment. Assign to its value an object with the properties
+//  of campsiteId, rating, author, and text, 
     const newComment = {
         campsiteId,
         rating,
         author,
         text
     };
+    // assign another property to the newComment object called date
     newComment.date = new Date().toDateString();
 
+    // setTimeout method, wait 2 seconds, then dispatch the addComment action creator, 
+    // passing the newComment object as an argument.
     setTimeout(() => {
         dispatch(addComment(newComment));
     }, 2000);

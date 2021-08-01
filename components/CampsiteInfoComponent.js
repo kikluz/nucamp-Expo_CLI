@@ -17,9 +17,11 @@ const mapStateToProps = state => {
 };
 
 
-// TASK 3
+// TASK 3 Dispatch the new postComment action creator
 const mapDispatchToProps = {
     postFavorite: campsiteId => (postFavorite(campsiteId)),
+
+    // Add postComment, passing the campsiteId, rating, author, and text as parameters.
     postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
 };
 
@@ -125,7 +127,8 @@ class CampsiteInfo extends Component {
     // TASK 2 Handle form submission
     // TASK 3 Use postComment action creator instead of logging the new comment to the console
     handleComment(campsiteId) {
-        // console.log(JSON.stringify(this.state));
+
+        // Call postComment, passing the campsiteId argument along with the three form values from the state.
         this.props.postComment(campsiteId, this.state.rating, this.state.author, this.state.text);
         this.toggleModal();
 
