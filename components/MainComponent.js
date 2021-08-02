@@ -5,7 +5,7 @@ import CampsiteInfo from './CampsiteInfoComponent';
 import Constants from 'expo-constants';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
-
+import Favorites from './FavoritesComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native'; // Stack Navigator Icons  & Custom Side Drawer -> Text, ScrollView, Image //
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'; //Cstom side drwr DRAWERITEMS//
@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { fetchCampsites, fetchComments, fetchPromotions,
     fetchPartners } from '../redux/ActionCreators';
 import Reservation from './ReservationComponent';
+
 
 
 const mapDispatchToProps = {
@@ -108,7 +109,7 @@ const AboutNavigator = createStackNavigator(
 );
 
   
-  const ContactNavigator = createStackNavigator(
+const ContactNavigator = createStackNavigator(
     {
         Contact: { screen: Contact }
     },
@@ -132,6 +133,7 @@ const AboutNavigator = createStackNavigator(
 );
 
 
+
 // ReservationNavigator component Stack Navigator 
 const ReservationNavigator = createStackNavigator(
     {
@@ -148,6 +150,30 @@ const ReservationNavigator = createStackNavigator(
             },
             headerLeft: <Icon
                 name='tree'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
+
+// Stack navigator for Favorites 
+const FavoritesNavigator = createStackNavigator(
+    {
+        Favorites: { screen: Favorites }
+    },
+    {
+        defaultNavigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='heart'
                 type='font-awesome'
                 iconStyle={styles.stackIcon}
                 onPress={() => navigation.toggleDrawer()}
@@ -223,6 +249,20 @@ const MainNavigator = createDrawerNavigator(
             )
         }
     },
+    Favorites: {
+        screen: FavoritesNavigator,
+        navigationOptions: {
+            drawerLabel: 'My Favorites',
+            drawerIcon: ({tintColor}) => (
+                <Icon
+                    name='heart'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                />
+            )
+        }
+    },
       About: {
           screen: AboutNavigator,
           navigationOptions: {
@@ -268,8 +308,6 @@ class Main extends Component {
         this.props.fetchPromotions();
         this.props.fetchPartners();
     }
-
-
 
     render() {
         return (
