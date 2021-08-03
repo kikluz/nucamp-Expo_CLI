@@ -185,3 +185,11 @@ const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
+
+// Action creator for delete favorites
+// creates an action Object with action type of delete favorite 
+// and a payload of the campsite id to be deleted
+export const deleteFavorite = campsiteId => ({
+    type: ActionTypes.DELETE_FAVORITE,
+    payload: campsiteId
+});

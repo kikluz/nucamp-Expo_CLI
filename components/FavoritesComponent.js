@@ -1,9 +1,13 @@
 import React, {Component } from 'react';
-import { FlatList, View, Text  } from 'react-native';
+import { FlatList, View, Text, StyleSheet  } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
+import { SwipeRow } from 'react-native-swipe-list-view';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { campsitesFailed, deleteFavorite } from '../redux/ActionCreators';
+import { styleSheets } from 'min-document';
 
 // Taks Access campsites data from Redux state
 // Use connect() function to connect to redux store 
@@ -15,6 +19,12 @@ const mapStateToProps = state => {
         campsites: state.campsites,
         favorites: state.favorites
     };
+};
+
+// map dispatch to props and specify the delete action creator 
+// along with campsite id with his parameter 
+const mapDispatchToProps = {
+    deleteFavorite: campsiteId => deleteFavorite(campsiteId)
 };
 
 // Setup Favorites Component
@@ -30,13 +40,26 @@ class Favorites extends Component {
         // destructuring the current item from the array
         const renderFavoriteItem = ({item}) => {
             return (
-                <ListItem 
-                    title={item.name}
-                    subtitle={item.description}
-                    leftAvatar={{source: {uri: baseUrl + item.image}}}
-                    // turn it into a link using th eonPress props 
-                    onPress={() => navigate('CampsiteInfo', {campsiteId: item.id})}
-                />
+    
+                <SwipeRow rightOpenValue={-100} style={styles.swipeRow}>                
+                    <View style={styles.deleteView}>
+                        <TouchableOpacity style={styles.deleteTouchable} onPress={() => this.props.deleteFavorite(item.id)}>
+
+                                <Text style={styles.deleteText}>Delete</Text>
+                                
+                        </TouchableOpacity>
+                    </View>
+
+                    <View>
+                        <ListItem 
+                            title={item.name}
+                            subtitle={item.description}
+                            leftAvatar={{source: {uri: baseUrl + item.image}}}
+                            // turn it into a link using th eonPress props 
+                            onPress={() => navigate('CampsiteInfo', {campsiteId: item.id})}
+                        />
+                    </View>
+                </SwipeRow>
             );
         };
 
@@ -67,5 +90,29 @@ class Favorites extends Component {
         );
     }
 }
+
+
+// styleSheets for swipeRow
+const styles = StyleSheet.create( {
+    deleteView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flex: 1
+    },
+    deleteTouchable: {
+        backgroundColor: 'red',
+        height: '100%',
+        justifyContent: 'center'
+    },
+    deleteText: {
+        color: 'white',
+        fontWeight: '700',
+        textAlign: 'center',
+        width: 100
+
+    }
+
+})
 // export by default to mapStateToProps as an arguement
-export default connect(mapStateToProps)(Favorites)
+export default connect(mapStateToProps, mapDispatchToProps )(Favorites)

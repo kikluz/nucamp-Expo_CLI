@@ -9,8 +9,14 @@ export const favorites = (state = [], action) => {
                 // return preview state 
                 return state;
             }
-            // concat make a copy of array add a new item end of it return new array no mutating preview array  
+            // concat makes a copy of array add a new item end of it return new array no mutating preview array  
             return state.concat(action.payload);
+
+        case ActionTypes.DELETE_FAVORITE:
+            // use filter, create a new array from the favorites state, every campsite 
+            // deos NOT match the campsite id in the action payload that creates a campsite id 
+            // that no longer contains the campsite id and return as a new state.  
+            return  state.filter(favorites => favorites != action.payload)
 
         default:
             return state;
