@@ -9,6 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { campsitesFailed, deleteFavorite } from '../redux/ActionCreators';
 import { styleSheets } from 'min-document';
 import { Button } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 // Taks Access campsites data from Redux state
 // Use connect() function to connect to redux store 
@@ -101,16 +102,18 @@ class Favorites extends Component {
         }
         // if errrMess is false return FlatList conponent
         return (
-            <FlatList
-            //   filtered out campsite id, and matches with favorites id and access via props favorites
-                data={this.props.campsites.campsites.filter(
-                    campsite => this.props.favorites.includes(campsite.id)
-                )} 
-                // render renderItem prop 
-                renderItem={renderFavoriteItem}
-                // keyExtractor prop, passing eact item into a fucntion  and extracting the id from it as string
-                keyExtractor={item => item.id.toString()}
-            />
+            <Animatable.View animation="fadeInRightBig" duration={2000}>
+                <FlatList
+                //   filtered out campsite id, and matches with favorites id and access via props favorites
+                    data={this.props.campsites.campsites.filter(
+                        campsite => this.props.favorites.includes(campsite.id)
+                    )} 
+                    // render renderItem prop 
+                    renderItem={renderFavoriteItem}
+                    // keyExtractor prop, passing eact item into a fucntion  and extracting the id from it as string
+                    keyExtractor={item => item.id.toString()}
+                />
+            </Animatable.View>
         );
     }
 }

@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { fetchCampsites, fetchComments, fetchPromotions,
     fetchPartners } from '../redux/ActionCreators';
 import Reservation from './ReservationComponent';
+import * as Animatable from 'react-native-animatable';
 
 
 
