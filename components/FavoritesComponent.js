@@ -8,6 +8,7 @@ import { SwipeRow } from 'react-native-swipe-list-view';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { campsitesFailed, deleteFavorite } from '../redux/ActionCreators';
 import { styleSheets } from 'min-document';
+import { Button } from 'react-native';
 
 // Taks Access campsites data from Redux state
 // Use connect() function to connect to redux store 
@@ -45,11 +46,13 @@ class Favorites extends Component {
                     <View style={styles.deleteView}>
                         <TouchableOpacity style={styles.deleteTouchable} 
                             onPress={() =>
+                                // alert takes parameter 
                                 Alert.alert(
                                     'Delete Favorite?',
                                      'Are you sure you wish to delete the favorite campsite ' +
                                      item.name +
                                      '?',
+                                    //  array of Object represetnt Buttons cancel and ok
                                     [
                                         {
                                             text: 'Cancel',

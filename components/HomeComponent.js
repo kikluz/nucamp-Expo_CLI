@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
+import { View, Text, Animated } from 'react-native';
 import { Card } from 'react-native-elements';
+import { Value } from 'react-native-reanimated';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
@@ -46,6 +48,35 @@ function RenderItem(props) {
 }
 
 class Home extends Component {
+    
+    // add constructor to store the Animated Value in the local component state
+    constructor(props){
+        super(props);
+        this.state = {
+            scaleValue: new Animated.Value(0)
+        };
+    }
+
+    // create a method  for timing with two arguments 
+    animate(){
+        Animated.timing(
+            this.state.scaleValue,
+            {
+                // changes the value from 0 to 1-(100% in terms of scale)
+                toValue: 1,
+                // duration property set to 1 1/2 seconds 
+                duration: 1500,
+                // set useNativeDriver to true to improve the performance of Animation library
+                useNativeDriver: true
+            }
+            // chain a method call() to start the run  animation
+        ).start();
+    }
+
+    // called just onces
+    componentDidMount() {
+        this.animate();
+    }
 
     static navigationOptions = {
         title: 'Home'
@@ -53,7 +84,9 @@ class Home extends Component {
 
     render() {
         return (
-            <ScrollView>
+            // Animated.ScrollView gives a ScrollView that is hook up to the animated aip
+            // this.state.scaleValue is the dynamic value that will change the animation when running 
+            <Animated.ScrollView style={{transform: [{scale: this.state.scaleValue}]}}>
                 <RenderItem
                     item={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
                     isLoading={this.props.campsites.isLoading}
@@ -69,7 +102,7 @@ class Home extends Component {
                     isLoading={this.props.partners.isLoading}
                     errMess={this.props.partners.errMess}
                 />
-            </ScrollView>
+            </Animated.ScrollView>
         );
     }
 }
