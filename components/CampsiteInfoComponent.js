@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 // TASK ONE
-import { Text, View, ScrollView, StyleSheet, Switch, Button, FlatList, Modal, TextInput } from 'react-native';
+import { 
+    Text, View, ScrollView, StyleSheet, 
+    Button, FlatList, Modal, Alert, PanResponder  
+    } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-import { campsitesFailed, postComment, postFavorite } from '../redux/ActionCreators';
+import { postFavorite, postComment } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
 
 
@@ -29,11 +32,50 @@ const mapDispatchToProps = {
 function RenderCampsite(props) {
 
     const { campsite } = props;
+    // reconizedDrag arrow function take parameter an Object and destructure from it
+    // a property name dx(distance of a gesture across the x-axis ) use ternary operator
+    // return true is value is less then -200 and flase if ist NOT
+    const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
+
+    const panResponder = PanResponder.create({
+        // active the pan responder to respond to gestures on the component 
+        onStartShouldSetPanResponder: () => true,
+        // Event handler, set parameters e (event), gestureState, holding values 
+        onPanResponderEnd: (e, gestureState) => {
+            console.log('pan responder end', gestureState);
+            // if the gesture was more than 200 pixels to the left 
+            if (recognizeDrag(gestureState)) {
+                Alert.alert(
+                    'Add Favorite',
+                    'Are you sure you wish to add ' + campsite.name + ' to favorites?',
+                    // array which holds objects to configure the alert buttons
+                    [
+                        {
+                            text: 'Cancel',
+                            style: 'cancel',
+                            onPress: () => console.log('Cancel Pressed')
+                        },
+                        {
+                            text: 'OK',
+                            onPress: () => props.favorite ?
+                                console.log('Already set as a favorite') : props.markFavorite()
+                        }
+                    ],
+                    // user can not tap outside of the alert box to close it 
+                    { cancelable: false }
+                );
+            }
+            return true;
+        }
+    });
 
     if (campsite) {
         return (
 
-            <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+            <Animatable.View 
+                animation='fadeInDown' duration={2000} delay={1000}
+                // use spread syntax to spread out the panResponder panHandlers, conbine them into one Object
+                {...panResponder.panHandlers}>
 
                 <Card featuredTitle={campsite.name} image={{ uri: baseUrl + campsite.image }}>
                 
@@ -60,7 +102,7 @@ function RenderCampsite(props) {
         );
     }
     return <View />;
-}
+} 
 
 function RenderComments({ comments }) {
 
