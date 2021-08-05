@@ -31,6 +31,10 @@ const mapDispatchToProps = {
 
 function RenderCampsite(props) {
 
+    // create a ref  using theReact.createRef() method 
+    // so ref point to animatable Component
+    const view = React.createRef();
+
     const { campsite } = props;
     // reconizedDrag arrow function take parameter an Object and destructure from it
     // a property name dx(distance of a gesture across the x-axis ) use ternary operator
@@ -40,6 +44,14 @@ function RenderCampsite(props) {
     const panResponder = PanResponder.create({
         // active the pan responder to respond to gestures on the component 
         onStartShouldSetPanResponder: () => true,
+        // panHandlers, trigger when gesture fist recognised
+        onPanResponderGrant: () => {
+            // use ref, the animatable view Component and refert to the 
+            // current mounted instance of this component, call an animatable fucntion
+            view.current.rubberBand(1000)
+            // use promise wheter is finishe or it is cnacelled
+                .then(endState => console.log(endState.finished ? 'finished' : 'cnacel'));
+        },  
         // Event handler, set parameters e (event), gestureState, holding values 
         onPanResponderEnd: (e, gestureState) => {
             console.log('pan responder end', gestureState);
@@ -74,6 +86,8 @@ function RenderCampsite(props) {
 
             <Animatable.View 
                 animation='fadeInDown' duration={2000} delay={1000}
+                // setup ref prop with value View
+                ref={view}
                 // use spread syntax to spread out the panResponder panHandlers, conbine them into one Object
                 {...panResponder.panHandlers}>
 
