@@ -41,6 +41,8 @@ function RenderCampsite(props) {
     // return true is value is less then -200 and flase if ist NOT
     const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
 
+    const recognizeComment = ({dx}) => (dx > 200) ? true : false;
+
     const panResponder = PanResponder.create({
         // active the pan responder to respond to gestures on the component 
         onStartShouldSetPanResponder: () => true,
@@ -76,6 +78,9 @@ function RenderCampsite(props) {
                     // user can not tap outside of the alert box to close it 
                     { cancelable: false }
                 );
+            }
+            else if(recognizeComment(gestureState)){
+                props.onShowModal();
             }
             return true;
         }
