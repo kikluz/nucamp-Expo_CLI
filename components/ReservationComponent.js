@@ -13,8 +13,7 @@ class Reservation extends Component {
             campers: 1,
             hikeIn: false,
             date: new Date(),
-            showCalendar: false,
-            // showModal: false
+            showCalendar: false
         };
     }
 
@@ -22,16 +21,11 @@ class Reservation extends Component {
         title: 'Reserve Campsite'
     }
 
-    // toggleModal() {
-    //     // check surrent state of property and toggle it to opposite using setState
-    //     this.setState({showModal: !this.state.showModal});
-    
-    // }
+   
 
     handleReservation() {
         console.log(JSON.stringify(this.state));
-        // call the toogle modal method 
-        // this.toggleModal();
+        
         const massage = `Number of Campers: ${this.state.campers}
                         \nHkie-In: ${this.state.hikeIn}
                         \nDate: ${this.state.date.toDateString('en-US')}`;
