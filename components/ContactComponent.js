@@ -20,7 +20,7 @@ class Contact extends Component {
             // recipents will take an array of items 
             recipents: ['campsites@nucamp.co'],
             subject: 'Inquary',
-            body: 'To whom iy may concern:' 
+            body: 'To whom it may concern:' 
         })
     }   
 
