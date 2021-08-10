@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // TASK ONE
 import { 
-    Text, View, ScrollView, StyleSheet, 
+    Text, View, ScrollView, StyleSheet, Share, 
     Button, FlatList, Modal, Alert, PanResponder  
     } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
@@ -86,6 +86,18 @@ function RenderCampsite(props) {
         }
     });
 
+    // share campsite, three paramaters
+    const shareCampsite = (title, message, url) => {
+        // we use the share AIP's 
+        Share.share({
+            title,
+            message: `${title}: ${message} ${url}`,
+            url
+        },{
+            dialogTitle: 'Share ' + title
+        });
+    }
+
     if (campsite) {
         return (
 
@@ -113,6 +125,16 @@ function RenderCampsite(props) {
                         {/* TASK ONEweek 2 */}
                         <Icon name={'pencil'} type='font-awesome' color='#5637DD' raised reverse
                             onPress={() => props.onShowModal()}
+                        />
+
+                        <Icon
+                            name={'share'} type='font-awesome' color='#5637DD' raised reverse
+                            onPress={() => shareCampsite(
+                                    campsite.name, 
+                                    campsite.description,
+                                    baseUrl + campsite.image
+                                )
+                            }
                         />
                     </View>
                 </Card>
