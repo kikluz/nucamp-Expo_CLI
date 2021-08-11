@@ -29,9 +29,6 @@ const mapDispatchToProps = {
     fetchPartners
 };
 
-
-
-
 //Stack Navigator Icons 
 const DirectoryNavigator = createStackNavigator(
   {
@@ -137,7 +134,6 @@ const ContactNavigator = createStackNavigator(
 );
 
 
-
 // ReservationNavigator component Stack Navigator 
 const ReservationNavigator = createStackNavigator(
     {
@@ -210,7 +206,6 @@ const LoginNavigator = createStackNavigator(
     }
 );
 
-
 //Stack Navigator Icons//
 const CustomDrawerContentComponent = props => (
   <ScrollView>
@@ -229,7 +224,6 @@ const CustomDrawerContentComponent = props => (
       </SafeAreaView>
   </ScrollView>
 );
-
 
 //Drawer Navigator Icons//
 const MainNavigator = createDrawerNavigator(
@@ -393,8 +387,6 @@ class Main extends Component {
             ? Alert.alert('Connection change:', connectionMsg)
             : ToastAndroid.show(connectionMsg, ToastAndroid.LONG);
     }
-
-
 
     render() {
         return (
