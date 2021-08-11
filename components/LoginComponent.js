@@ -149,6 +149,20 @@ class LoginTab extends Component {
 // Register tab component 
 class RegisterTab extends Component {
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            username: '',
+            password: '',
+            fisrname: '',
+            lastname: '',
+            emial: '',
+            remember: false,
+            imageUrl: baseUrl + 'images/logo.png'
+        };
+    }
+
      static navigationOptions = {
         title: 'Register',
         tabBarIcon: ({tintColor}) => (
@@ -159,10 +173,131 @@ class RegisterTab extends Component {
             />
         )
     }
+
+    // get image from camara
+    getImageFromCamera = async () => {
+        // this allow to use the camara 
+        const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
+        // permission to allow us to read from and to the camara roll 
+        const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+        if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
+            const capturedImage = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [1, 1]
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
+                this.setState({imageUrl: capturedImage.uri});
+            }
+        }
+    }
+
+    handleRegister(){
+        // Log the state to the console
+        console.log(JSON.stringify(this.state));
+        // check if the remember me CheckBox is checked
+        if(this.state.remember) {
+            // if it is save the username nad password to SecureStore
+            SecureStore.setItemAsync(
+                // first argument this will be the key 
+                'userinfo',
+                // convert to json string before to store 
+                JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password
+                })
+                // add a catch block and error will pass as an argument 
+            ).catch(error => console.log('Could not safe user info', error));
+        } else {
+            // delete any data stored under the key userinfo
+            SecureStore.deleteItemAsync('userinfo')
+            .catch(error => console.log('Could not delete usere info', error)
+            );
+        }
+    }
+
     render(){
         return(
-            <ScrollView>
 
+            <ScrollView>
+                <View style={styles.container}>
+
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={{uri: this.state.imageUrl}}
+                            loadingIndicatorSource={require('./images/logo.png')}
+                            style={styles.image}
+                        />
+                        <Button
+                            title='Camera'
+                            onPress={this.getImageFromCamera}
+                        />
+                    </View>
+
+                    <Input
+                        placeholder='Username'
+                        leftIcon={{type: 'font-awesome', name: 'user-o'}}
+                        onChangeText={username => this.setState({username})}
+                        value={this.state.username}
+                        containerStyle={styles.formInput}
+                        leftIconContainerStyle={styles.formIcon}
+                    />
+                    <Input
+                        placeholder='Password'
+                        leftIcon={{type: 'font-awesome', name: 'key'}}
+                        onChangeText={password => this.setState({password})}
+                        value={this.state.password}
+                        containerStyle={styles.formInput}
+                        leftIconContainerStyle={styles.formIcon}
+                    />
+                    <Input
+                        placeholder='First Name'
+                        leftIcon={{type: 'font-awesome', name: 'user-o'}}
+                        onChangeText={firstname => this.setState({firstname})}
+                        value={this.state.firstname}
+                        containerStyle={styles.formInput}
+                        leftIconContainerStyle={styles.formIcon}
+                    />
+                    <Input
+                        placeholder='Last Name'
+                        leftIcon={{type: 'font-awesome', name: 'user-o'}}
+                        onChangeText={lastname => this.setState({lastname})}
+                        value={this.state.lastname}
+                        containerStyle={styles.formInput}
+                        leftIconContainerStyle={styles.formIcon}
+                    />
+                    <Input
+                        placeholder='Email'
+                        leftIcon={{type: 'font-awesome', name: 'envelope-o'}}
+                        onChangeText={email => this.setState({email})}
+                        value={this.state.email}
+                        containerStyle={styles.formInput}
+                        leftIconContainerStyle={styles.formIcon}
+                    />
+                    <CheckBox
+                        title='Remember Me'
+                        center
+                        checked={this.state.remember}
+                        onPress={() => this.setState({remember: !this.state.remember})}
+                        containerStyle={styles.formCheckbox}
+                    />
+                    <View style={styles.formButton}>
+                        <Button
+                            onPress={() => this.handleRegister()}
+                            title='Register'
+                            icon={
+                                <Icon
+                                    name='user-plus'
+                                    type='font-awesome'
+                                    color='#fff'
+                                    iconStyle={{marginRight: 10}}
+                                />
+                            }
+                            buttonStyle={{backgroundColor: '#5637DD'}}
+                        />
+                    </View>
+                </View>
             </ScrollView>
         )
     }
@@ -187,16 +322,29 @@ const Login = createBottomTabNavigator(
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        margin: 20
+        margin: 10
     },
     formIcon: { marginRight: 10 },
-    formInput: { padding: 10 },
+    formInput: { padding: 8 },
     formCheckBox: {
-        margin: 10,
+        margin: 8,
         backgroundColor: null
     },
     formButton: {
-        margin: 40
+        margin: 20,
+        marginRight: 40,
+        marginLeft: 40
+    },
+    imageContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        margin: 10,
+    },
+    image : {
+        width: 60,  
+        height: 60
     }
 });
 
