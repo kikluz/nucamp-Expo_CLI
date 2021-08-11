@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import { Input, CheckBox } from 'react-native-elements';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import { Input, CheckBox, Button, Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import { createBottomTabNavigator, createTabNavigator } from 'react-navigation-tabs';
+import { baseUrl } from '../shared/baseUrl';
 
+     
 
-
-class Login extends Component {
+class LoginTab extends Component {
     constructor(props) {
         super(props);
 
@@ -16,8 +20,15 @@ class Login extends Component {
         };
     }
 
-    static nagigationOptions = {
-        title: 'Login'
+     static navigationOptions = {
+        title: 'Login',
+        tabBarIcon: ({tintColor}) => (
+            <Icon
+                name='sign-in'
+                type='font-awesome'
+                iconStyle={{color: tintColor}}
+            />
+        )
     }
     
     // handleLogin event hadler
@@ -100,7 +111,33 @@ class Login extends Component {
                     // return the handleLogin() method 
                         onPress={() => this.handleLogin()}
                         title='Login'
-                        color='#5637DD'
+                        icon={
+                            <Icon
+                                name="sign-in"
+                                type="font-awesome"
+                                color="#fff"
+                                iconStyle={{marginRight: 10}} 
+                            />
+                        }
+                       buttonStyle={{backgroundColor: '#5637DD'}} 
+                    />
+                </View>
+
+                <View style={styles.formButton} >
+                    <Button 
+                    // register buttom (can be destructuring) 
+                        onPress={() => this.props.navigation.navigate('Register')}
+                        title='Register'
+                        type='clear'
+                        icon={
+                            <Icon
+                                name="user-plus"
+                                type="font-awesome"
+                                color="blue"
+                                iconStyle={{marginRight: 10}} 
+                            />
+                        }
+                       titleStyle={{color: 'blue'}} 
                     />
                 </View>
 
@@ -108,6 +145,44 @@ class Login extends Component {
         );
     }
 }
+
+// Register tab component 
+class RegisterTab extends Component {
+
+     static navigationOptions = {
+        title: 'Register',
+        tabBarIcon: ({tintColor}) => (
+            <Icon
+                name='user-plus'
+                type='font-awesome'
+                iconStyle={{color: tintColor}}
+            />
+        )
+    }
+    render(){
+        return(
+            <ScrollView>
+
+            </ScrollView>
+        )
+    }
+}
+//  create a new constant Login
+const Login = createBottomTabNavigator(
+    {
+        Login: LoginTab,
+        Register: RegisterTab
+    },
+    {
+        tabBarOptions: {
+            activeBackgroundColor: '#5637DD',
+            inactiveBackgroundColor: '#cec8ff',
+            activeTintColor: '#fff',
+            inactiveTintColor: '#808080',
+            labelStyle: { fontSize: 16 }
+        }
+    }
+);
 
 const styles = StyleSheet.create({
     container: {
