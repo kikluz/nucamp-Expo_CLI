@@ -350,15 +350,51 @@ class Main extends Component {
 
         // Use NetInfo.fecth() method to obtain network state once
         // return a promise when promise is resolve get net info state back  
-        // NetInfo.fetch().then(connectionInfo => {
-        //     // check for type of phone
-        //     (Platform.OS ===  'ios')
-        //     // if it (ios)  do this 
-        //         ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.type)
-        //         // if it NOT (ios), use ToastAndroid api, and fades awit in seconds duration(3.5 seconds)
-        //         : ToastAndroid.show('Initial Network Connetivity Type: ' + connectionInfo.type.LONG);
-        // });
+        NetInfo.fetch().then(connectionInfo => {
+            // check for type of phone
+            (Platform.OS ===  'ios')
+            // if it (ios)  do this 
+                ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.type)
+                // if it NOT (ios), use ToastAndroid api, and fades awit in seconds duration(3.5 seconds)
+                : ToastAndroid.show('Initial Network Connetivity Type: ' + connectionInfo.type, ToastAndroid.LONG);
+        });
+
+        // start listening for changes as soon as the app loads
+        // callback function in its parameter list have access to the NetInfo Object as arvument
+        // passing as connectionInfo 
+        this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
+            // callback handleConnectivityChange and pass the connectionInfo
+            this.handleConnectivityChange(connectionInfo);
+        });
     }
+    // react lifecycle method conponent
+    componentWillUnmount() {
+        // callback the unsubscribeNetInfo to stop listening for connection 
+        this.unsubscribeNetInfo();
+    }
+
+    handleConnectivityChange = connectionInfo => {
+        let connectionMsg = 'You are now connected to an active network.'
+        switch(connectionInfo.type) {
+            case 'none':
+                connectionMsg = "No network connection is active.";
+                break;
+            case 'UnKnown':
+                connectionMsg = "The network connection state is now unknown."
+                break; 
+            case 'cellular':
+                connectionMsg = 'You are now connect to the cellular network.';
+                break; 
+            case 'wifi':
+                connectionMsg = 'Yoy are now connect to a wifi network';
+                break;               
+        }
+        (Platform.OS === 'ios')
+            ? Alert.alert('Connection change:', connectionMsg)
+            : ToastAndroid.show(connectionMsg, ToastAndroid.LONG);
+    }
+
+
 
     render() {
         return (
