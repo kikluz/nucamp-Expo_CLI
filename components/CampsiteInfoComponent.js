@@ -52,7 +52,7 @@ function RenderCampsite(props) {
             // current mounted instance of this component, call an animatable fucntion
             view.current.rubberBand(1000)
             // use promise wheter is finishe or it is cnacelled
-                .then(endState => console.log(endState.finished ? 'finished' : 'cnacel'));
+                .then(endState => console.log(endState.finished ? 'finished' : 'cancel'));
         },  
         // Event handler, set parameters e (event), gestureState, holding values 
         onPanResponderEnd: (e, gestureState) => {

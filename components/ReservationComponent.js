@@ -27,30 +27,33 @@ class Reservation extends Component {
     handleReservation() {
         console.log(JSON.stringify(this.state));
         
-        const massage = `Number of Campers: ${this.state.campers}
-                        \nHkie-In: ${this.state.hikeIn}
-                        \nDate: ${this.state.date.toDateString('en-US')}`;
+        const message = `Number of Campers: ${this.state.campers}
+                        \nHike-In: ${this.state.hikeIn}
+                        \nDate: ${this.state.date.toLocaleDateString('en-US')}`;
         Alert.alert(
             'Begin Search?',
-            massage,
+            message,
             [
                 {
                     text: 'Cancel',
-                    onPress: () => console.log('not delete'),
+                    onPress: () => {
+                        console.log('Reservation Search Canceled');
+                        this.resetForm();
+                    },
+        
                     style: 'cancel'
                 },
                 {
                     text: 'OK',
                     onPress: () => {
                         // call async fucntion  here when ok button alert is pressed will present the notification 
-                        this.presentLocalNotification(this.state.date.toLocaleDateString('en-US'));
+                        // this.presentLocalNotification(this.state.date.toLocaleDateString('en-US'));
                         this.resetForm();
                     }
                 }
             ],
             {cancelable: false}
         )
-    
     
     }
         resetForm() {

@@ -6,7 +6,7 @@ import Reservation from './ReservationComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Favorites from './FavoritesComponent';
-import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native'; // Stack Navigator Icons  & Custom Side Drawer -> Text, ScrollView, Image //
+import { View, Platform, StyleSheet, Text, ScrollView, Image, Alert, ToastAndroid } from 'react-native'; // Stack Navigator Icons  & Custom Side Drawer -> Text, ScrollView, Image //
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'; //Cstom side drwr DRAWERITEMS//
 import { createAppContainer } from 'react-navigation';
@@ -18,6 +18,7 @@ import { fetchCampsites, fetchComments, fetchPromotions,
     fetchPartners } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
 import Login from './LoginComponent';
+import NetInfo from '@react-native-community/netinfo';
 
 
 
@@ -346,6 +347,17 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchPromotions();
         this.props.fetchPartners();
+
+        // Use NetInfo.fecth() method to obtain network state once
+        // return a promise when promise is resolve get net info state back  
+        // NetInfo.fetch().then(connectionInfo => {
+        //     // check for type of phone
+        //     (Platform.OS ===  'ios')
+        //     // if it (ios)  do this 
+        //         ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.type)
+        //         // if it NOT (ios), use ToastAndroid api, and fades awit in seconds duration(3.5 seconds)
+        //         : ToastAndroid.show('Initial Network Connetivity Type: ' + connectionInfo.type.LONG);
+        // });
     }
 
     render() {
