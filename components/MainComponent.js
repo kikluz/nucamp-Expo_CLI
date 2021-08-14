@@ -341,26 +341,29 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchPromotions();
         this.props.fetchPartners();
+        this.showNetInfo();
+        
+        this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
+            this.handleConnectivityChange(connectionInfo);
+        });
+    }
+ 
 
+    showNetInfo = async () => {  
+
+        // Task 3: NetInfo.fetch() call to use async/await to handle the promise returned from the operation.
         // Use NetInfo.fecth() method to obtain network state once
         // return a promise when promise is resolve get net info state back  
-        NetInfo.fetch().then(connectionInfo => {
+        const connectionInfo = await NetInfo.fetch();
+
             // check for type of phone
             (Platform.OS ===  'ios')
             // if it (ios)  do this 
                 ? Alert.alert('Initial Network Connectivity Type:', connectionInfo.type)
                 // if it NOT (ios), use ToastAndroid api, and fades awit in seconds duration(3.5 seconds)
                 : ToastAndroid.show('Initial Network Connetivity Type: ' + connectionInfo.type, ToastAndroid.LONG);
-        });
-
-        // start listening for changes as soon as the app loads
-        // callback function in its parameter list have access to the NetInfo Object as arvument
-        // passing as connectionInfo 
-        this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
-            // callback handleConnectivityChange and pass the connectionInfo
-            this.handleConnectivityChange(connectionInfo);
-        });
-    }
+        }
+        
     // react lifecycle method conponent
     componentWillUnmount() {
         // callback the unsubscribeNetInfo to stop listening for connection 
